@@ -52,11 +52,11 @@ if ((A_DDDD = "Monday" and savedMon = 1) or (A_DDDD = "Tuesday" and savedTue = 1
 		Loop, Read, %A_WinDir%\System32\drivers\etc\hosts
 		{
 			If InStr(A_LoopReadLine, " #" count)
-				FileAppend, %Text_To_Insert%`n, %A_Temp%\Temp.txt
+				FileAppend, %Text_To_Insert%`n, %A_Temp%\Temporary
 			Else
-				FileAppend, %A_LoopReadLine%`n, %A_Temp%\Temp.txt
+				FileAppend, %A_LoopReadLine%`n, %A_Temp%\Temporary
 		}
-		FileMove, %A_Temp%\Temp.txt, %A_WinDir%\System32\drivers\etc\hosts, 1
+		FileMove, %A_Temp%\Temporary, %A_WinDir%\System32\drivers\etc\hosts, 1
 	}
 }
 

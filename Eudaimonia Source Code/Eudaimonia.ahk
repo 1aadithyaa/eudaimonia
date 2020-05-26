@@ -13,10 +13,13 @@ Gui, Add, Button, gProgram x42 y319 w230 h50, Program Settings
 Gui, Add, Button, gWeb x42 y369 w230 h50, Web
 
 Loop, 5 {
-FileAppend,, %A_AppData%\Eudaimonia\set%A_Index%url.txt
-FileAppend,, %A_AppData%\Eudaimonia\set%A_Index%prog.txt
-FileAppend,, %A_AppData%\Eudaimonia\programs%A_Index%.txt
-FileAppend,, %A_AppData%\Eudaimonia\urls%A_Index%.txt
+IfNotExist, %A_AppData%\Eudaimonia\set%A_Index%url.txt
+	{
+	FileAppend, Block Set %A_Index%`n0000-2400`n0`n0`n0`n0`n0`n0`n0`n0`n0`n0`n0, %A_AppData%\Eudaimonia\set%A_Index%url.txt
+	FileAppend, Block Set %A_Index%`n0000-2400`n0`n0`n0`n0`n0`n0`n0`n0`n0`n0`n0, %A_AppData%\Eudaimonia\set%A_Index%prog.txt
+	FileAppend,, %A_AppData%\Eudaimonia\programs%A_Index%.txt
+	FileAppend,, %A_AppData%\Eudaimonia\urls%A_Index%.txt
+	}
 }
 Gui, Show, w317 h443, Eudaimonia
 return

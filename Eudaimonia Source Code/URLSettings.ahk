@@ -26,13 +26,12 @@ count := 1
 Loop, 4 {
 	count++
 	FileReadLine, savedName, %A_Appdata%/Eudaimonia/set%count%url.txt, 1
-	Gui, Add, Button, x+0 w80 vButton%count% gReaderChange, Block Set %count%
-	if savedName != 
-	GuiControl, Text, Button%count%, %savedName%
+	Gui, Add, Button, x+0 w80 vButton%count% gReaderChange, %savedName%
 }
 
 ; What to block
 Gui, Add, Text, x10, Enter a custom name for this block set (optional):
+FileReadLine, savedName, %A_Appdata%/Eudaimonia/set1url.txt, 1
 Gui, Add, Edit, y+8 w100 vSet1 gPrefs, %savedName%
 Gui, Add, Text,, Enter the domain names of the sites to block (one item per line):
 Gui, Add, Edit, y+8 w400 h100 vURL gSubmit_URL, %savedURLs%
@@ -55,7 +54,7 @@ Gui, Add, Checkbox,x+8 gPrefs vThu Checked%savedThu%, Thu
 Gui, Add, Checkbox,x+8 gPrefs vFri Checked%savedFri%, Fri
 Gui, Add, Checkbox,x+8 gPrefs vSat Checked%savedSat%, Sat
 Gui, Add, Checkbox,x+8 gPrefs vSun Checked%savedSun%, Sun
-Gui, Add, Checkbox,x10 y+12 gPrefs vOver Checked%savedOver%, Allow temporary override for these sites
+Gui, Add, Checkbox,x10 y+12 gPrefs gPrompt vOver Checked%savedOver%, Allow temporary override for these sites
 
 Gui, Add, Button, x100 y+8 gSubmit_URL, Save Options
 Gui, Add, Button, x+0 gSaveAndClose, Save Options And Close
@@ -71,6 +70,34 @@ Prefs:
 	FileDelete, %A_Appdata%/Eudaimonia/set%str%url.txt
     FileAppend, %Set1%`n%AllDayField%`n%Mins%`n%Mon%`n%Tue%`n%Wed%`n%Thu%`n%Fri%`n%Sat%`n%Sun%`n%Over%`n%Every%, %A_Appdata%/Eudaimonia/set%str%url.txt
 	Gui, Submit, NoHide
+	return
+	
+Prompt:
+	arr := ["HU*4itdJ1LQ!bE1GdHdkpveN#8m&@$1j", "SdF@LyF^EhulYYiw5xxsjvMtBk0B#!sH", "MSohi51ef1yuteyYK9klkqx%ny@o$Ayb", "J6E%aCfnf&DMBV$^4!Jns^2qiaXY$M7w", "L&ebaA%ChMjqprlk5NKBaCDpriqf5OgL", "rg*b8LLVt517a%BLk34XhOjFnJtZQ@n4", "Ee87%4^NpclSKr!sZxr88wb8LUkA*Abk", "sJF$A&RpbaNTV!N*Q^XsL8t5jV^Gmo4l"]
+	Random, number, 1, 8
+	var := arr[number]
+
+OverrideCode:
+	GuiControlGet, state,, %A_GuiControl%
+	if (state = 1) {
+		InputBox, str, Enable Override, To enable override`, please type in the following 32-character code:`n%var%
+		if (str = var) {
+			MsgBox, Temporary override enabled for 15 minutes!
+			GuiControl,, Over, 1
+			GuiControl, Text, Over, Allow temporary override for these applications
+			Goto, Prefs			
+		}
+		if (ErrorLevel = 1) {
+			GuiControl,, Over, 0
+			Gosub, Prefs
+		}
+		else {
+			MsgBox, Try again!
+			GuiControl,, Over, 0
+			GuiControl, Text, Over, Allow temporary override for these applications
+			Gosub, OverrideCode
+		}
+	}
 	return
 
 Submit_URL:
