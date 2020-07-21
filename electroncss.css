@@ -1,0 +1,30 @@
+/* Monofokal */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap');
+
+h1 {
+  position: absolute;
+  width: 296px;
+  height: 46px;
+  font-family: 'Montserrat', sans-serif;
+  font-style: italic;
+  font-weight: 900;
+  font-size: 50px;
+  line-height: 61px;
+  color: #FFFFFF;
+  margin: auto;
+  text-align: center;
+}
+body {
+  background-color: lightblue;
+}
+
+
+body span h2 {
+  text-align: center;
+  background: #222;
+  color: #fff;
+  display: inline-block;
+  /* float:left;  remove */
+  margin: 10px 10px 0 0;
+  padding: 5px 10px
+}
